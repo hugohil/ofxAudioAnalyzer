@@ -68,12 +68,12 @@ void ofxAudioAnalyzer::reset(int sampleRate, int bufferSize, int channels){
 //-------------------------------------------------------
 void ofxAudioAnalyzer::analyze(const ofSoundBuffer & inBuffer){
 
-    if(inBuffer.getNumChannels() != _channels){
-        ofLogError()<<"ofxAudioAnalyzer: inBuffer channels number incorrect.";
+    if(inBuffer.getNumChannels() < _channels){
+        ofLogError()<<"ofxAudioAnalyzer: inBuffer channels cannot be less than audioAnalyzer.";
         return;
     }
 
-    if(channelAnalyzerUnits.size()!= _channels){
+    if(channelAnalyzerUnits.size() != _channels){
         ofLogError()<<"ofxAudioAnalyzer: wrong number of audioAnalyzerUnits";
         return;
     }
@@ -107,7 +107,7 @@ void ofxAudioAnalyzer::exit(){
 float ofxAudioAnalyzer::getValue(ofxAAAlgorithm algorithm, int channel, float smooth, bool normalized){
 
     if (channel >= _channels){
-        ofLogError()<<"ofxAudioAnalyzer: channel for getting value is incorrect.";
+        ofLogError()<<"ofxAudioAnalyzer: channel " + ofToString(channel) + " for getting value is incorrect.";
         return 0.0;
     }
 
